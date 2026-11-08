@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="theme-color" content="#f4f8fb">
+  <meta name="description" content="Explore ion movement, Zn–Cu voltaic cells and water electrolysis with interactive scientific diagrams.">
+  <title>Electrochemistry Lab — Interactive Cells</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="page-wrap">
+    <header class="site-header">
+      <a class="logo" href="#top" aria-label="Electrochemistry Lab home">
+        <span class="logo-mark" aria-hidden="true"><span class="logo-pole"></span><span class="logo-bolt">ϟ</span></span>
+        <span class="logo-word"><strong>ELECTROCHEMISTRY</strong><small>INTERACTIVE LAB</small></span>
+      </a>
+      <div class="header-right"><span class="header-descriptor"><span class="signal"></span> THREE INTERACTIVE EXPERIMENTS</span><button id="presentButton" type="button" class="present-button" aria-label="Toggle fullscreen view">⛶ <span>Present</span></button></div>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="heroHeading">
+        <div class="hero-copy"><span class="eyebrow">ELECTRONS · IONS · ENERGY</span><h1 id="heroHeading">Watch chemistry <em>move.</em></h1><p>Explore how charges travel, how spontaneous reactions produce electricity, and how an external power supply drives electrolysis.</p></div>
+        <div class="hero-decoration" aria-hidden="true"><span class="orb orb-one">e⁻</span><span class="orb orb-two">+</span><span class="orb orb-three">−</span><svg viewBox="0 0 240 150"><path d="M25 108 Q115 5 218 101" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="5 10"/><path d="M26 35 Q140 162 210 35" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="5 10"/></svg></div>
+      </section>
+
+      <nav class="experiment-picker" aria-label="Experiments" role="tablist">
+        <button type="button" id="tab-movement" class="experiment-tab active" role="tab" aria-selected="true" aria-controls="labPanel" data-mode="movement" tabindex="0"><span class="tab-top"><span class="tab-number">01</span><span class="tab-symbol">⇆</span></span><strong>Movement of Charges</strong><small>Electrons &amp; ions</small></button>
+        <button type="button" id="tab-voltaic" class="experiment-tab" role="tab" aria-selected="false" aria-controls="labPanel" data-mode="voltaic" tabindex="-1"><span class="tab-top"><span class="tab-number">02</span><span class="tab-symbol">⚡</span></span><strong>Voltaic Cell</strong><small>Spontaneous redox</small></button>
+        <button type="button" id="tab-electrolytic" class="experiment-tab" role="tab" aria-selected="false" aria-controls="labPanel" data-mode="electrolytic" tabindex="-1"><span class="tab-top"><span class="tab-number">03</span><span class="tab-symbol">⊕</span></span><strong>Electrolytic Cell</strong><small>Electrical energy in</small></button>
+      </nav>
+
+      <section class="experiment-body" id="labPanel" role="tabpanel" aria-labelledby="tab-movement">
+        <article class="visual-panel" aria-label="Interactive scientific diagram">
+          <div class="panel-heading"><span class="mini-overline">LIVE DIAGRAM <span class="mini-divider">/</span> <span id="diagramSubhead">DANIELL CELL</span></span><span class="indicator"><span class="indicator-dot" id="indicatorDot"></span><span id="indicatorLabel">FLOW ACTIVE</span></span></div>
+          <div class="svg-frame"><svg id="diagram" viewBox="0 0 920 530" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Animated diagram of a Zn–Cu cell"></svg></div>
+          <div class="diagram-footer"><span><span class="color-dot electron-dot"></span> <span id="legendElectron">e⁻: external circuit</span></span><span><span class="color-dot ion-dot"></span> <span id="legendIon">ions: electrolyte / bridge</span></span><span class="diagram-note" id="diagramNote">Schematic · not to scale</span></div>
+        </article>
+
+        <aside class="control-panel" aria-label="Experiment controls">
+          <div class="control-overline">EXPERIMENT CONTROLS <span>LAB <span id="labNumber">01</span></span></div>
+          <h2 id="controlTitle">Follow the charge</h2>
+          <p id="controlDescription" class="control-desc">Switch between electron and ion movement to see the two pathways that sustain a Zn–Cu cell.</p>
+          <div class="state-card"><span class="state-caption">CELL STATUS</span><strong id="stateTitle">CURRENT FLOWING</strong><p id="stateBody">Electrons travel through the external circuit while bridge ions maintain charge balance.</p></div>
+          <div id="controlElements" class="control-elements"></div>
+          <div class="insight-card"><span class="insight-icon" aria-hidden="true">✦</span><p id="insightText">Follow the two paths: electrons move through the wire; ions move through the solutions and salt bridge.</p></div>
+          <button class="reset-button" type="button" id="resetButton">↺ Reset experiment</button>
+        </aside>
+      </section>
+
+      <section class="learn" aria-labelledby="learnTitle">
+        <div class="learn-heading"><div><span class="eyebrow">THE SCIENCE BEHIND THE DIAGRAM</span><h2 id="learnTitle">What you are observing</h2></div><span class="learn-number" id="learnNumber">01 / 03</span></div>
+        <div class="fact-grid" id="factGrid" aria-live="polite"></div>
+        <details class="reactions" id="reactionDetails"><summary><span class="summary-icon">＋</span><span>Half-equations &amp; overall reaction</span><span class="summary-hint">OPEN THE CHEMISTRY</span></summary><div id="reactionContent" class="reactions-content"></div></details>
+      </section>
+
+      <section class="comparison" aria-labelledby="compareTitle">
+        <div class="comparison-intro"><span class="eyebrow">REMEMBER THE DIFFERENCE</span><h2 id="compareTitle">Two ways to move electrons.</h2></div>
+        <div class="comparison-grid"><div><span class="comparison-symbol spontaneous">↗</span><h3>Voltaic</h3><p>Spontaneous redox reaction</p><strong>CHEMICAL → ELECTRICAL</strong><small>Anode (−) · Cathode (+)</small></div><div><span class="comparison-symbol driven">↘</span><h3>Electrolytic</h3><p>Non-spontaneous reaction driven by a DC supply</p><strong>ELECTRICAL → CHEMICAL</strong><small>Anode (+) · Cathode (−)</small></div></div><p class="comparison-rule">In both cells: <strong>oxidation occurs at the anode</strong>, and <strong>reduction occurs at the cathode</strong>.</p>
+      </section>
+    </main>
+
+    <footer class="footer"><div><strong>ELECTROCHEMISTRY LAB</strong><span>Interactive models of electrochemical principles.</span></div><details class="references"><summary>Scientific references <span aria-hidden="true">↗</span></summary><ul><li><a href="https://openstax.org/books/chemistry-2e/pages/17-2-galvanic-cells" target="_blank" rel="noopener noreferrer">OpenStax Chemistry 2e — Galvanic Cells</a></li><li><a href="https://openstax.org/books/chemistry-2e/pages/17-3-electrode-and-cell-potentials" target="_blank" rel="noopener noreferrer">OpenStax Chemistry 2e — Electrode and Cell Potentials</a></li><li><a href="https://openstax.org/books/chemistry-2e/pages/17-7-electrolysis" target="_blank" rel="noopener noreferrer">OpenStax Chemistry 2e — Electrolysis</a></li></ul></details></footer>
+  </div>
+</body>
+</html>
